@@ -278,8 +278,6 @@ static void yy_flex_free YY_PROTO(( void * ));
 typedef unsigned char YY_CHAR;
 FILE *yyin = (FILE *) 0, *yyout = (FILE *) 0;
 typedef int yy_state_type;
-extern int yylineno;
-int yylineno = 1;
 extern char *yytext;
 #define yytext_ptr yytext
 
@@ -604,13 +602,6 @@ int yylex(void) {
         }
 
         YY_DO_BEFORE_ACTION;
-
-        if (yy_act != YY_END_OF_BUFFER) {
-            int yyl;
-            for (yyl = 0; yyl < yyleng; ++yyl)
-                if (yytext[yyl] == '\n')
-                    ++yylineno;
-        }
 
     do_action: /* This label is used only to access EOF actions. */
 
@@ -1003,9 +994,6 @@ register char *yy_bp;
 
     *--yy_cp = (char) c;
 
-    if (c == '\n')
-        --yylineno;
-
     yytext_ptr = yy_bp;
     yy_hold_char = *yy_cp;
     yy_c_buf_p = yy_cp;
@@ -1077,9 +1065,6 @@ static int input()
     c = *(unsigned char *) yy_c_buf_p; /* cast for 8-bit char's */
     *yy_c_buf_p = '\0'; /* preserve yytext */
     yy_hold_char = *++yy_c_buf_p;
-
-    if (c == '\n')
-        ++yylineno;
 
     return c;
 }

@@ -9,7 +9,6 @@ void yyerror(char *e);
 
 int yylex();
 
-extern int yylineno;
 extern char *yytext;
 
 typedef int t_var;

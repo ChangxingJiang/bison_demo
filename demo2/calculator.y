@@ -85,5 +85,5 @@ int main(){
 }
 
 void yyerror(char *e){
-    fprintf(stderr, "%s:%d\n", e, yylineno);
+    fprintf(stderr, "%s\n", e);
 }
