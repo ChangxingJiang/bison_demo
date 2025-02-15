@@ -1,8 +1,6 @@
 #ifndef ALL_H
 #define ALL_H
 
-#include <stdio.h>
-#define E(_fmt,args...) fprintf(stderr, _fmt, ##args)
 #define MAX_VAR_SIZE	100
 
 void yyerror(char *e);
