@@ -1,5 +1,8 @@
 #include "calculator.h"
 
+#include <stdlib.h>
+#include <string.h>
+
 
 char *var_names[MAX_VAR_SIZE] = {NULL};
 t_var var_vals[MAX_VAR_SIZE] = {0};
