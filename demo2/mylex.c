@@ -216,7 +216,6 @@ int yyleng;
 
 /* Points to current character in buffer. */
 static char *yy_c_buf_p = (char *) 0;
-static int yy_init = 1; /* whether we need to initialize */
 static int yy_start = 0; /* start state number */
 
 /* Flag which is used to allow yywrap()'s to do buffer switches
@@ -238,36 +237,11 @@ void yy_flush_buffer YY_PROTO(( YY_BUFFER_STATE b ));
 
 #define YY_FLUSH_BUFFER yy_flush_buffer( yy_current_buffer )
 
-YY_BUFFER_STATE yy_scan_buffer YY_PROTO(( char *base, yy_size_t size ));
-
-YY_BUFFER_STATE yy_scan_string YY_PROTO(( yyconst char *yy_str ));
-
-YY_BUFFER_STATE yy_scan_bytes YY_PROTO(( yyconst char *bytes, int len ));
-
 static void *yy_flex_alloc YY_PROTO(( yy_size_t ));
 
 static void *yy_flex_realloc YY_PROTO(( void *, yy_size_t ));
 
-static void yy_flex_free YY_PROTO(( void * ));
-
 #define yy_new_buffer yy_create_buffer
-
-#define yy_set_interactive(is_interactive) \
-	{ \
-	if ( ! yy_current_buffer ) \
-		yy_current_buffer = yy_create_buffer( yyin, YY_BUF_SIZE ); \
-	yy_current_buffer->yy_is_interactive = is_interactive; \
-	}
-
-#define yy_set_bol(at_bol) \
-	{ \
-	if ( ! yy_current_buffer ) \
-		yy_current_buffer = yy_create_buffer( yyin, YY_BUF_SIZE ); \
-	yy_current_buffer->yy_at_bol = at_bol; \
-	}
-
-#define YY_AT_BOL() (yy_current_buffer->yy_at_bol)
-
 
 #define YY_USES_REJECT
 
@@ -424,12 +398,6 @@ extern int yywrap YY_PROTO(( void ));
 static void yyunput YY_PROTO(( int c, char *buf_ptr ));
 #endif
 
-static void yy_flex_strncpy YY_PROTO(( char *, yyconst char *, int ));
-
-#ifdef YY_NEED_STRLEN
-static int yy_flex_strlen YY_PROTO(( yyconst char * ));
-#endif
-
 #ifndef YY_NO_INPUT
 #ifdef __cplusplus
 static int yyinput YY_PROTO(( void ));
@@ -442,15 +410,6 @@ static int input YY_PROTO(( void ));
 static int yy_start_stack_ptr = 0;
 static int yy_start_stack_depth = 0;
 static int *yy_start_stack = 0;
-#ifndef YY_NO_PUSH_STATE
-static void yy_push_state YY_PROTO(( int new_state ));
-#endif
-#ifndef YY_NO_POP_STATE
-static void yy_pop_state YY_PROTO(( void ));
-#endif
-#ifndef YY_NO_TOP_STATE
-static int yy_top_state YY_PROTO(( void ));
-#endif
 
 #else
 #define YY_NO_PUSH_STATE 1
@@ -995,151 +954,6 @@ YY_BUFFER_STATE b;
 }
 
 
-#ifndef YY_NO_SCAN_BUFFER
-#ifdef YY_USE_PROTOS
-YY_BUFFER_STATE yy_scan_buffer(char *base, yy_size_t size)
-#else
-YY_BUFFER_STATE yy_scan_buffer( base, size )
-char *base;
-yy_size_t size;
-#endif
-{
-    YY_BUFFER_STATE b;
-
-    if (size < 2 ||
-        base[size - 2] != YY_END_OF_BUFFER_CHAR ||
-        base[size - 1] != YY_END_OF_BUFFER_CHAR)
-        /* They forgot to leave room for the EOB's. */
-        return 0;
-
-    b = (YY_BUFFER_STATE) yy_flex_alloc(sizeof(struct yy_buffer_state));
-    if (!b)
-        YY_FATAL_ERROR("out of dynamic memory in yy_scan_buffer()");
-
-    b->yy_buf_size = size - 2; /* "- 2" to take care of EOB's */
-    b->yy_buf_pos = b->yy_ch_buf = base;
-    b->yy_is_our_buffer = 0;
-    b->yy_input_file = 0;
-    b->yy_n_chars = b->yy_buf_size;
-    b->yy_is_interactive = 0;
-    b->yy_at_bol = 1;
-    b->yy_fill_buffer = 0;
-    b->yy_buffer_status = YY_BUFFER_NEW;
-
-    yy_switch_to_buffer(b);
-
-    return b;
-}
-#endif
-
-
-#ifndef YY_NO_SCAN_STRING
-#ifdef YY_USE_PROTOS
-YY_BUFFER_STATE yy_scan_string(yyconst char *yy_str)
-#else
-YY_BUFFER_STATE yy_scan_string( yy_str )
-yyconst char *yy_str;
-#endif
-{
-    int len;
-    for (len = 0; yy_str[len]; ++len);
-
-    return yy_scan_bytes(yy_str, len);
-}
-#endif
-
-
-#ifndef YY_NO_SCAN_BYTES
-#ifdef YY_USE_PROTOS
-YY_BUFFER_STATE yy_scan_bytes(yyconst char *bytes, int len)
-#else
-YY_BUFFER_STATE yy_scan_bytes( bytes, len )
-yyconst char *bytes;
-int len;
-#endif
-{
-    YY_BUFFER_STATE b;
-    char *buf;
-    yy_size_t n;
-    int i;
-
-    /* Get memory for full buffer, including space for trailing EOB's. */
-    n = len + 2;
-    buf = (char *) yy_flex_alloc(n);
-    if (!buf)
-        YY_FATAL_ERROR("out of dynamic memory in yy_scan_bytes()");
-
-    for (i = 0; i < len; ++i)
-        buf[i] = bytes[i];
-
-    buf[len] = buf[len + 1] = YY_END_OF_BUFFER_CHAR;
-
-    b = yy_scan_buffer(buf, n);
-    if (!b)
-        YY_FATAL_ERROR("bad buffer in yy_scan_bytes()");
-
-    /* It's okay to grow etc. this buffer, and we should throw it
-     * away when we're done.
-     */
-    b->yy_is_our_buffer = 1;
-
-    return b;
-}
-#endif
-
-
-#ifndef YY_NO_PUSH_STATE
-#ifdef YY_USE_PROTOS
-static void yy_push_state( int new_state )
-#else
-static void yy_push_state( new_state )
-int new_state;
-#endif
-	{
-	if ( yy_start_stack_ptr >= yy_start_stack_depth )
-		{
-		yy_size_t new_size;
-
-		yy_start_stack_depth += YY_START_STACK_INCR;
-		new_size = yy_start_stack_depth * sizeof( int );
-
-		if ( ! yy_start_stack )
-			yy_start_stack = (int *) yy_flex_alloc( new_size );
-
-		else
-			yy_start_stack = (int *) yy_flex_realloc(
-					(void *) yy_start_stack, new_size );
-
-		if ( ! yy_start_stack )
-			YY_FATAL_ERROR(
-			"out of memory expanding start-condition stack" );
-		}
-
-	yy_start_stack[yy_start_stack_ptr++] = YY_START;
-
-	BEGIN(new_state);
-	}
-#endif
-
-
-#ifndef YY_NO_POP_STATE
-static void yy_pop_state()
-	{
-	if ( --yy_start_stack_ptr < 0 )
-		YY_FATAL_ERROR( "start-condition stack underflow" );
-
-	BEGIN(yy_start_stack[yy_start_stack_ptr]);
-	}
-#endif
-
-
-#ifndef YY_NO_TOP_STATE
-static int yy_top_state()
-	{
-	return yy_start_stack[yy_start_stack_ptr - 1];
-	}
-#endif
-
 #ifndef YY_EXIT_FAILURE
 #define YY_EXIT_FAILURE 2
 #endif
@@ -1171,40 +985,6 @@ char msg[];
 		} \
 	while ( 0 )
 
-
-/* Internal utility routines. */
-
-#ifdef YY_USE_PROTOS
-static void yy_flex_strncpy(char *s1, yyconst char *s2, int n)
-#else
-static void yy_flex_strncpy( s1, s2, n )
-char *s1;
-yyconst char *s2;
-int n;
-#endif
-{
-    register int i;
-    for (i = 0; i < n; ++i)
-        s1[i] = s2[i];
-}
-
-#ifdef YY_NEED_STRLEN
-#ifdef YY_USE_PROTOS
-static int yy_flex_strlen( yyconst char *s )
-#else
-static int yy_flex_strlen( s )
-yyconst char *s;
-#endif
-	{
-	register int n;
-	for ( n = 0; s[n]; ++n )
-		;
-
-	return n;
-	}
-#endif
-
-
 #ifdef YY_USE_PROTOS
 static void *yy_flex_alloc(yy_size_t size)
 #else
@@ -1231,16 +1011,6 @@ yy_size_t size;
      * as though doing an assignment.
      */
     return (void *) realloc((char *) ptr, size);
-}
-
-#ifdef YY_USE_PROTOS
-static void yy_flex_free(void *ptr)
-#else
-static void yy_flex_free( ptr )
-void *ptr;
-#endif
-{
-    free(ptr);
 }
 
 #if YY_MAIN
