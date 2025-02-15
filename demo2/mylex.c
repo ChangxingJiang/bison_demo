@@ -621,59 +621,48 @@ int yylex(void) {
                 printf("+");
                 return ADD;
             }
-            break;
             case 2: {
                 printf("-");
                 return SUB;
             }
-            break;
             case 3: {
                 printf("*");
                 return MUL;
             }
-            break;
             case 4: {
                 printf("/");
                 return DIV;
             }
-            break;
             case 5: {
                 printf("=");
                 return EQU;
             }
-            break;
             case 6: {
                 printf("(");
                 return BL;
             }
-            break;
             case 7: {
                 printf(")");
                 return BR;
             }
-            break;
             case 8: {
                 printf(yytext);
                 return NUM;
             }
-            break;
             case 9: {
                 printf(yytext);
                 return NUM;
             }
-            break;
             case 10: {
                 printf(yytext);
                 return VAR;
             }
-            break;
             case 11: {
             }
             break;
             case 12: {
                 return BR;
             }
-            break;
             case 13:
                 ECHO;
                 break;
