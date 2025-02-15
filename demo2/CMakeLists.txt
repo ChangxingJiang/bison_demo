@@ -8,4 +8,4 @@ add_executable(test_bison
         calculator.tab.h
         calculator.c
         calculator.h
-        lex.yy.c)
+        mylex.c)

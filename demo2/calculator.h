@@ -5,9 +5,6 @@
 #include <stdlib.h>
 #include <string.h>
 // #define D printf
-#define D 
-#define O printf
-// #define O
 #define E(_fmt,args...) fprintf(stderr, _fmt, ##args)
 #define MAX_VAR_SIZE	100
 

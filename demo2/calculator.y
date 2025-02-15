@@ -31,13 +31,13 @@ lines
 line
 	: BR
 	| exp BR {
-		O("=%d\n", $1);
+		printf("=%d\n", $1);
 	}
 	| varname EQU exp {
 		var_set($1, $3);
 		free($1);
 		$1=NULL;
-		O("\n");
+		printf("\n");
 	}
 ;
 

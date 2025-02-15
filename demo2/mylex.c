@@ -389,14 +389,9 @@ goto find_rule; \
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "calculator.l"
 #define INITIAL 0
-#line 3 "calculator.l"
 #include "calculator.h"
 
-
-#define RTK(tk)	D(#tk); D(" ");return tk;
-#line 400 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -519,47 +514,15 @@ YY_MALLOC_DECL
 #define YY_FATAL_ERROR(msg) yy_fatal_error( msg )
 #endif
 
-/* Default declaration of generated scanner - a define so the user can
- * easily add parameters.
- */
-#ifndef YY_DECL
-#define YY_DECL int yylex YY_PROTO(( void ))
-#endif
-
-/* Code executed at the beginning of each rule, after yytext and yyleng
- * have been set up.
- */
-#ifndef YY_USER_ACTION
-#define YY_USER_ACTION
-#endif
-
-/* Code executed at the end of each rule. */
-#ifndef YY_BREAK
-#define YY_BREAK break;
-#endif
-
-#define YY_RULE_SETUP \
-	YY_USER_ACTION
-
-YY_DECL
+int yylex (void)
 	{
 	register yy_state_type yy_current_state;
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 9 "calculator.l"
-
-
-
-#line 555 "lex.yy.c"
-
 	if ( yy_init )
 		{
 		yy_init = 0;
-
-#ifdef YY_USER_INIT
-		YY_USER_INIT;
-#endif
 
 		if ( ! yy_start )
 			yy_start = 1;	/* first start state */
@@ -643,105 +606,78 @@ do_action:	/* This label is used only to access EOF actions. */
 		switch ( yy_act )
 	{ /* beginning of action switch */
 case 1:
-YY_RULE_SETUP
-#line 12 "calculator.l"
 {
-	O("+");
-	RTK(ADD);
+	printf("+");
+	return ADD;
 }
-	YY_BREAK
+			break;
 case 2:
-YY_RULE_SETUP
-#line 17 "calculator.l"
 {
-	O("-");
-	RTK(SUB);
+	printf("-");
+	return SUB;
 }
-	YY_BREAK
+			break;
 case 3:
-YY_RULE_SETUP
-#line 22 "calculator.l"
 {
-	O("*");
-	RTK(MUL);
+	printf("*");
+	return MUL;
 }
-	YY_BREAK
+			break;
 case 4:
-YY_RULE_SETUP
-#line 27 "calculator.l"
 {
-	O("/");
-	RTK(DIV);
+	printf("/");
+	return DIV;
 }
-	YY_BREAK
+			break;
 case 5:
-YY_RULE_SETUP
-#line 32 "calculator.l"
 {
-	O("=");
-	RTK(EQU);
+	printf("=");
+	return EQU;
 }
-	YY_BREAK
+			break;
 case 6:
-YY_RULE_SETUP
-#line 37 "calculator.l"
 {
-	O("(");
-	RTK(BL);
+	printf("(");
+	return BL;
 }
-	YY_BREAK
+			break;
 case 7:
-YY_RULE_SETUP
-#line 42 "calculator.l"
 {
-	O(")");
-	RTK(BR);
+	printf(")");
+	return BR;
 }
-	YY_BREAK
+			break;
 case 8:
-YY_RULE_SETUP
-#line 47 "calculator.l"
 {
-	O(yytext);
-	RTK(NUM);
+	printf(yytext);
+	return NUM;
 }
-	YY_BREAK
+			break;
 case 9:
-YY_RULE_SETUP
-#line 52 "calculator.l"
 {
-	O(yytext);
-	RTK(NUM);
+	printf(yytext);
+	return NUM;
 }
-	YY_BREAK
+			break;
 case 10:
-YY_RULE_SETUP
-#line 57 "calculator.l"
 {
-	O(yytext);
-	RTK(VAR);
+	printf(yytext);
+	return VAR;
 }
-	YY_BREAK
+			break;
 case 11:
-YY_RULE_SETUP
-#line 62 "calculator.l"
 {
 
 }
-	YY_BREAK
+			break;
 case 12:
-YY_RULE_SETUP
-#line 66 "calculator.l"
 {
-	RTK(BR);
+	return BR;
 }
-	YY_BREAK
+			break;
 case 13:
-YY_RULE_SETUP
-#line 70 "calculator.l"
 ECHO;
-	YY_BREAK
-#line 745 "lex.yy.c"
+			break;
 			case YY_STATE_EOF(INITIAL):
 				yyterminate();
 
@@ -1625,4 +1561,3 @@ int main()
 	return 0;
 	}
 #endif
-#line 70 "calculator.l"
