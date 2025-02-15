@@ -2,9 +2,6 @@
 #define ALL_H
 
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-// #define D printf
 #define E(_fmt,args...) fprintf(stderr, _fmt, ##args)
 #define MAX_VAR_SIZE	100
 

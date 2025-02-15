@@ -27,7 +27,7 @@ t_var var_val(const char *name){
         return var_valof(ix);
     }
     else{
-        E("Unknow (%s)",name);
+        fprintf(stderr, "Unknow (%s)", name);
     }
 
 }
