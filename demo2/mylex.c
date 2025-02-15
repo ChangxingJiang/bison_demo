@@ -132,7 +132,7 @@ extern FILE *yyin, *yyout;
 		} \
 	while ( 0 )
 
-#define unput(c) yyunput( c, yytext_ptr )
+#define unput(c) yyunput( c, yytext )
 
 /* The following is because we cannot portably get our hands on size_t
  * (without autoconf's help, which isn't available because we want
@@ -279,7 +279,6 @@ typedef unsigned char YY_CHAR;
 FILE *yyin = (FILE *) 0, *yyout = (FILE *) 0;
 typedef int yy_state_type;
 extern char *yytext;
-#define yytext_ptr yytext
 
 static yy_state_type yy_get_previous_state YY_PROTO(( void ));
 
@@ -293,7 +292,7 @@ static void yy_fatal_error YY_PROTO(( yyconst char msg[] ));
  * corresponding action - sets up yytext.
  */
 #define YY_DO_BEFORE_ACTION \
-	yytext_ptr = yy_bp; \
+	yytext = yy_bp; \
 	yyleng = (int) (yy_cp - yy_bp); \
 	yy_hold_char = *yy_cp; \
 	*yy_cp = '\0'; \
@@ -427,9 +426,7 @@ extern int yywrap YY_PROTO(( void ));
 static void yyunput YY_PROTO(( int c, char *buf_ptr ));
 #endif
 
-#ifndef yytext_ptr
 static void yy_flex_strncpy YY_PROTO(( char *, yyconst char *, int ));
-#endif
 
 #ifdef YY_NEED_STRLEN
 static int yy_flex_strlen YY_PROTO(( yyconst char * ));
@@ -662,7 +659,7 @@ int yylex(void) {
 
             case YY_END_OF_BUFFER: {
                 /* Amount of text matched not including the EOB char. */
-                int yy_amount_of_matched_text = (int) (yy_cp - yytext_ptr) - 1;
+                int yy_amount_of_matched_text = (int) (yy_cp - yytext) - 1;
 
                 /* Undo the effects of YY_DO_BEFORE_ACTION. */
                 *yy_cp = yy_hold_char;
@@ -694,7 +691,7 @@ int yylex(void) {
                     /* This was really a NUL. */
                     yy_state_type yy_next_state;
 
-                    yy_c_buf_p = yytext_ptr + yy_amount_of_matched_text;
+                    yy_c_buf_p = yytext + yy_amount_of_matched_text;
 
                     yy_current_state = yy_get_previous_state();
 
@@ -709,7 +706,7 @@ int yylex(void) {
 
                     yy_next_state = yy_try_NUL_trans(yy_current_state);
 
-                    yy_bp = yytext_ptr + YY_MORE_ADJ;
+                    yy_bp = yytext + YY_MORE_ADJ;
 
                     if (yy_next_state) {
                         /* Consume the NUL. */
@@ -735,7 +732,7 @@ int yylex(void) {
                                  * YY_NULL, it'll still work - another
                                  * YY_NULL will get returned.
                                  */
-                                yy_c_buf_p = yytext_ptr + YY_MORE_ADJ;
+                                yy_c_buf_p = yytext + YY_MORE_ADJ;
 
                                 yy_act = YY_STATE_EOF(YY_START);
                                 goto do_action;
@@ -747,13 +744,12 @@ int yylex(void) {
                         }
 
                         case EOB_ACT_CONTINUE_SCAN:
-                            yy_c_buf_p =
-                                    yytext_ptr + yy_amount_of_matched_text;
+                            yy_c_buf_p = yytext + yy_amount_of_matched_text;
 
                             yy_current_state = yy_get_previous_state();
 
                             yy_cp = yy_c_buf_p;
-                            yy_bp = yytext_ptr + YY_MORE_ADJ;
+                            yy_bp = yytext + YY_MORE_ADJ;
                             goto yy_match;
 
                         case EOB_ACT_LAST_MATCH:
@@ -763,7 +759,7 @@ int yylex(void) {
                             yy_current_state = yy_get_previous_state();
 
                             yy_cp = yy_c_buf_p;
-                            yy_bp = yytext_ptr + YY_MORE_ADJ;
+                            yy_bp = yytext + YY_MORE_ADJ;
                             goto yy_find_action;
                     }
                 break;
@@ -787,7 +783,7 @@ int yylex(void) {
 
 static int yy_get_next_buffer() {
     register char *dest = yy_current_buffer->yy_ch_buf;
-    register char *source = yytext_ptr;
+    register char *source = yytext;
     register int number_to_move, i;
     int ret_val;
 
@@ -797,7 +793,7 @@ static int yy_get_next_buffer() {
 
     if (yy_current_buffer->yy_fill_buffer == 0) {
         /* Don't try to fill the buffer, so this is an EOF. */
-        if (yy_c_buf_p - yytext_ptr - YY_MORE_ADJ == 1) {
+        if (yy_c_buf_p - yytext - YY_MORE_ADJ == 1) {
             /* We matched a single character, the EOB, so
              * treat this as a final EOF.
              */
@@ -813,7 +809,7 @@ static int yy_get_next_buffer() {
     /* Try to read more data. */
 
     /* First move last chars to start of buffer. */
-    number_to_move = (int) (yy_c_buf_p - yytext_ptr) - 1;
+    number_to_move = (int) (yy_c_buf_p - yytext) - 1;
 
     for (i = 0; i < number_to_move; ++i)
         *(dest++) = *(source++);
@@ -896,7 +892,7 @@ static int yy_get_next_buffer() {
     yy_current_buffer->yy_ch_buf[yy_n_chars] = YY_END_OF_BUFFER_CHAR;
     yy_current_buffer->yy_ch_buf[yy_n_chars + 1] = YY_END_OF_BUFFER_CHAR;
 
-    yytext_ptr = &yy_current_buffer->yy_ch_buf[0];
+    yytext = &yy_current_buffer->yy_ch_buf[0];
 
     return ret_val;
 }
@@ -912,7 +908,7 @@ static yy_state_type yy_get_previous_state() {
     yy_state_ptr = yy_state_buf;
     *yy_state_ptr++ = yy_current_state;
 
-    for (yy_cp = yytext_ptr + YY_MORE_ADJ; yy_cp < yy_c_buf_p; ++yy_cp) {
+    for (yy_cp = yytext + YY_MORE_ADJ; yy_cp < yy_c_buf_p; ++yy_cp) {
         register YY_CHAR yy_c = (*yy_cp ? yy_ec[YY_SC_TO_UI(*yy_cp)] : 1);
         while (yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state) {
             yy_current_state = (int) yy_def[yy_current_state];
@@ -994,7 +990,7 @@ register char *yy_bp;
 
     *--yy_cp = (char) c;
 
-    yytext_ptr = yy_bp;
+    yytext = yy_bp;
     yy_hold_char = *yy_cp;
     yy_c_buf_p = yy_cp;
 }
@@ -1022,7 +1018,7 @@ static int input()
 
         else {
             /* need more input */
-            int offset = yy_c_buf_p - yytext_ptr;
+            int offset = yy_c_buf_p - yytext;
             ++yy_c_buf_p;
 
             switch (yy_get_next_buffer()) {
@@ -1056,7 +1052,7 @@ static int input()
                 }
 
                 case EOB_ACT_CONTINUE_SCAN:
-                    yy_c_buf_p = yytext_ptr + offset;
+                    yy_c_buf_p = yytext + offset;
                     break;
             }
         }
@@ -1121,7 +1117,7 @@ void yy_load_buffer_state()
 #endif
 {
     yy_n_chars = yy_current_buffer->yy_n_chars;
-    yytext_ptr = yy_c_buf_p = yy_current_buffer->yy_buf_pos;
+    yytext = yy_c_buf_p = yy_current_buffer->yy_buf_pos;
     yyin = yy_current_buffer->yy_input_file;
     yy_hold_char = *yy_c_buf_p;
 }
@@ -1420,7 +1416,6 @@ char msg[];
 
 /* Internal utility routines. */
 
-#ifndef yytext_ptr
 #ifdef YY_USE_PROTOS
 static void yy_flex_strncpy( char *s1, yyconst char *s2, int n )
 #else
@@ -1434,7 +1429,6 @@ int n;
 	for ( i = 0; i < n; ++i )
 		s1[i] = s2[i];
 	}
-#endif
 
 #ifdef YY_NEED_STRLEN
 #ifdef YY_USE_PROTOS
